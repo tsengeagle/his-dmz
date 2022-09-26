@@ -46,7 +46,8 @@ public class HealthHubController {
             return ResponseEntity.badRequest().body("vital_sign_type incorrect");
         }
 
-        logger.debug("收到正確的資料");
+        logger.info("收到正確的資料: {}", data.toString());
+
         return ResponseEntity.ok(data.toString());
     }
 
