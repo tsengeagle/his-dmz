@@ -48,7 +48,7 @@ public class HealthHubController {
 
         logger.info("收到正確的資料: {}", data.toString());
 
-        return ResponseEntity.ok(data.toString());
+        return ResponseEntity.ok("done");
     }
 
 }
