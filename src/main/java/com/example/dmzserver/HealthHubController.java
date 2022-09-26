@@ -20,6 +20,17 @@ import java.util.Map;
 public class HealthHubController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final HashMap<String, String> vitalSignTypeMap;
+
+    public HealthHubController() {
+        vitalSignTypeMap = new HashMap();
+        vitalSignTypeMap.put("BP", "血壓");
+        vitalSignTypeMap.put("BS", "血糖");
+        vitalSignTypeMap.put("OX", "血氧");
+        vitalSignTypeMap.put("TP", "體溫");
+        vitalSignTypeMap.put("RR", "呼吸");
+        vitalSignTypeMap.put("PAIN", "疼痛");
+    }
 
     @PostMapping("/FS/uploaddata")
     public ResponseEntity healthHubUploadData(@RequestBody Map inputData) {
@@ -35,13 +46,6 @@ public class HealthHubController {
             return ResponseEntity.badRequest().body("parse json fail");
         }
 
-        HashMap<String, String> vitalSignTypeMap = new HashMap();
-        vitalSignTypeMap.put("BP", "血壓");
-        vitalSignTypeMap.put("BS", "血糖");
-        vitalSignTypeMap.put("OX", "血氧");
-        vitalSignTypeMap.put("TP", "體溫");
-        vitalSignTypeMap.put("RR", "呼吸");
-        vitalSignTypeMap.put("PAIN", "疼痛");
         if (!vitalSignTypeMap.containsKey(data.vital_sign_type)) {
             return ResponseEntity.badRequest().body("vital_sign_type incorrect");
         }
