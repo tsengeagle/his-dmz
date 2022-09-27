@@ -46,8 +46,8 @@ public class HealthHubController {
             return ResponseEntity.badRequest().body("parse json fail: " + e.getMessage());
         }
 
-        if (!vitalSignTypeMap.containsKey(data.vital_sign_type)) {
-            return ResponseEntity.badRequest().body("vital_sign_type incorrect");
+        if (!vitalSignTypeMap.containsKey(data.vital_sign_type.toUpperCase())) {
+            return ResponseEntity.badRequest().body("vital_sign_type incorrect: " + data.vital_sign_type);
         }
 
         logger.info("收到正確的資料: {}", data.toString());
