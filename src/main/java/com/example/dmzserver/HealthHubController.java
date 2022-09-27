@@ -43,7 +43,7 @@ public class HealthHubController {
             data = new ObjectMapper().readValue(decoded, UploadData.class);
         } catch (JsonProcessingException e) {
             logger.error("parse json fail: {}", e.getMessage());
-            return ResponseEntity.badRequest().body("parse json fail");
+            return ResponseEntity.badRequest().body("parse json fail: " + e.getMessage());
         }
 
         if (!vitalSignTypeMap.containsKey(data.vital_sign_type)) {
