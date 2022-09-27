@@ -47,6 +47,7 @@ public class HealthHubController {
         }
 
         if (!vitalSignTypeMap.containsKey(data.vital_sign_type.toUpperCase())) {
+            logger.warn("vital_sign_type incorrect: {}", data.vital_sign_type);
             return ResponseEntity.badRequest().body("vital_sign_type incorrect: " + data.vital_sign_type);
         }
 
@@ -55,4 +56,28 @@ public class HealthHubController {
         return ResponseEntity.ok("done");
     }
 
+    @PostMapping("/FS/demo")
+    public ResponseEntity demo(@RequestBody String inputData) {
+        logger.info("receive input data: {}", inputData);
+//        String decoded = ASUSDecrypt.DecrypeData((String) inputData.get("data"));
+        String decoded = inputData;
+        logger.info("decoded data: {}", decoded);
+
+        UploadData data = null;
+        try {
+            data = new ObjectMapper().readValue(decoded, UploadData.class);
+        } catch (JsonProcessingException e) {
+            logger.error("parse json fail: {}", e.getMessage());
+            return ResponseEntity.badRequest().body("parse json fail: " + e.getMessage());
+        }
+
+        if (!vitalSignTypeMap.containsKey(data.vital_sign_type.toUpperCase())) {
+            logger.warn("vital_sign_type incorrect: {}", data.vital_sign_type);
+            return ResponseEntity.badRequest().body("vital_sign_type incorrect: " + data.vital_sign_type);
+        }
+
+        logger.info("收到正確的資料: {}", data.toString());
+
+        return ResponseEntity.ok("done");
+    }
 }
